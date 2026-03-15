@@ -1,0 +1,18 @@
+# Environment
+.env
+
+# Dependencies
+node_modules/
+
+# Frontend build
+frontend/dist/
+
+# Test coverage
+coverage/
+
+# Logs
+logs/
+*.log
+
+# macOS
+.DS_Store
