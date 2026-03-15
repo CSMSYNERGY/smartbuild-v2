@@ -1,18 +1,24 @@
 # Stage 1: Build React frontend
 FROM node:20-alpine AS frontend-builder
 WORKDIR /app/frontend
-COPY frontend/package*.json ./
-RUN npm ci
+
+# Install dependencies separately to leverage layer cache
+COPY frontend/package.json frontend/package-lock.json* ./
+ENV NODE_OPTIONS=--max-old-space-size=512
+RUN npm install --prefer-offline --no-audit --no-fund
+
+# Copy source and build
 COPY frontend/ ./
 RUN npm run build
 
 # Stage 2: Production Node backend
-FROM node:20-slim AS production
+FROM node:20-alpine AS production
 WORKDIR /app
 
-# Copy backend dependencies manifest and install production only
-COPY package*.json ./
-RUN npm ci --omit=dev
+# Install backend production dependencies
+COPY package.json package-lock.json* ./
+ENV NODE_OPTIONS=--max-old-space-size=512
+RUN npm install --omit=dev --prefer-offline --no-audit --no-fund
 
 # Copy backend source
 COPY src/ ./src/
