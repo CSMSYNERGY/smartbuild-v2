@@ -7,6 +7,7 @@ import {
   getPlans,
   createSubscriptionHandler,
   cancelSubscriptionHandler,
+  getGhlFields,
   getMappers,
   createMapper,
   updateMapper,
@@ -30,6 +31,9 @@ router.get('/me', getMe);
 router.get('/subscription/plans', getPlans);
 router.post('/subscription/create', actionLimiter, createSubscriptionHandler);
 router.delete('/subscription/cancel', actionLimiter, cancelSubscriptionHandler);
+
+// GHL fields
+router.get('/ghl/fields', getGhlFields);
 
 // Mappers CRUD
 router.get('/mappers', getMappers);

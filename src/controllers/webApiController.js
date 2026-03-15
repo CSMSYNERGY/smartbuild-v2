@@ -10,6 +10,7 @@ import { createError } from '../core/middleware/errorHandler.js';
 import { randomUUID } from 'crypto';
 import * as deposytService from '../services/deposytService.js';
 import * as subscriptionService from '../services/subscriptionService.js';
+import { makeGhlRequest } from '../services/ghlService.js';
 
 // ─── Me ──────────────────────────────────────────────────────────────────────
 
@@ -107,6 +108,26 @@ export async function getMappers(req, res, next) {
       );
 
     res.json({ mappers: rows });
+  } catch (err) {
+    next(err);
+  }
+}
+
+// ─── GHL Fields ──────────────────────────────────────────────────────────────
+
+export async function getGhlFields(req, res, next) {
+  try {
+    const { locationId } = req.user;
+
+    const data = await makeGhlRequest(locationId, 'GET', '/contacts/custom-fields');
+
+    // GHL returns { customFields: [{ id, name, fieldKey, dataType, ... }] }
+    const fields = (data?.customFields ?? []).map((f) => ({
+      key: f.fieldKey ?? f.id,
+      label: f.name,
+    }));
+
+    res.json({ fields });
   } catch (err) {
     next(err);
   }
