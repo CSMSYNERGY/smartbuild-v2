@@ -36,8 +36,8 @@ export default function Home() {
     <div className="space-y-6 max-w-3xl">
       {/* Welcome banner */}
       <div
-        className="rounded-lg px-6 py-5 text-white flex items-center justify-between"
-        style={{ backgroundColor: '#3d3672' }}
+        className="rounded-lg text-white"
+        style={{ backgroundColor: '#3d3672', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '24px' }}
       >
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Welcome to BuildBridge</h1>
@@ -56,10 +56,12 @@ export default function Home() {
           alt="BuildBridge"
           className="hidden sm:block"
           style={{
-            height: '120px',
+            height: '110px',
             width: 'auto',
             objectFit: 'contain',
-            filter: 'drop-shadow(0px 6px 20px rgba(0,0,0,0.5))',
+            borderRadius: '12px',
+            padding: '8px',
+            background: 'rgba(255,255,255,0.1)',
           }}
         />
       </div>

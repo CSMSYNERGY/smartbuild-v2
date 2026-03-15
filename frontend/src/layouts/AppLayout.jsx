@@ -30,18 +30,15 @@ export default function AppLayout() {
         style={{ backgroundColor: '#3d3672' }}
       >
         {/* Logo */}
-        <div className="flex items-center gap-2 shrink-0">
+        <div
+          className="shrink-0"
+          style={{ background: 'rgba(255,255,255,0.15)', borderRadius: '8px', padding: '4px 8px', display: 'flex', alignItems: 'center' }}
+        >
           <img
             src="/app/logo.png"
             alt="BuildBridge"
-            style={{ height: '44px', width: 'auto' }}
+            style={{ height: '38px', width: 'auto', objectFit: 'contain' }}
           />
-          <span
-            className="hidden sm:block text-[10px] leading-none"
-            style={{ color: '#75e6da' }}
-          >
-            by CSM Synergy
-          </span>
         </div>
 
         {/* Divider */}
