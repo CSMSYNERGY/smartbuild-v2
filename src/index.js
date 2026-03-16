@@ -17,6 +17,7 @@ import webApiRoutes from './routes/webApiRoutes.js';
 import webhookRoutes from './routes/webhookRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 
+console.log('[index] All imports resolved. Configuring Express...');
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 
@@ -72,8 +73,9 @@ app.get('/app/*splat', (_req, res) => {
 // Global error handler (must be last)
 app.use(errorHandler);
 
+console.log('[index] Starting listener on port', env.PORT);
 app.listen(env.PORT, () => {
-  console.log(`SmartBuild v2 listening on port ${env.PORT} [${env.NODE_ENV}]`);
+  console.log(`[index] BuildBridge v2 listening on port ${env.PORT} [${env.NODE_ENV}]`);
 });
 
 export default app;
