@@ -33,75 +33,81 @@ export default function Home() {
   const activeSubs = subs.filter((s) => s.status === 'active');
 
   return (
-    <div className="space-y-6 max-w-3xl">
-      {/* Welcome banner */}
-      <div className="rounded-lg px-6 py-5 text-white" style={{ backgroundColor: '#3d3672', position: 'relative', overflow: 'hidden' }}>
-        <h1 className="text-2xl font-bold tracking-tight">Welcome to BuildBridge</h1>
-        <p className="mt-1 text-sm" style={{ color: 'rgba(255,255,255,0.75)' }}>
-          Location ID:{' '}
-          <code
-            className="font-mono text-xs px-1.5 py-0.5 rounded"
-            style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}
-          >
-            {user?.locationId}
-          </code>
-        </p>
-        <img
-          src="/app/logo.png"
-          alt=""
-          aria-hidden="true"
-          style={{
-            position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)',
-            height: '120px', width: 'auto', opacity: 0.25,
-            pointerEvents: 'none', userSelect: 'none',
-          }}
-        />
-      </div>
+    <div style={{ position: 'relative' }}>
+      {/* Full-page background watermark */}
+      <img
+        src="/app/logo.png"
+        alt=""
+        aria-hidden="true"
+        style={{
+          position: 'fixed', top: '50%', left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '70%', height: 'auto', opacity: 0.06,
+          pointerEvents: 'none', userSelect: 'none', zIndex: 0,
+        }}
+      />
 
-      {/* Subscription status */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base" style={{ color: '#3d3672' }}>Subscription Status</CardTitle>
-          <CardDescription>Your currently active plans</CardDescription>
-        </CardHeader>
-        <CardContent>
-          {activeSubs.length === 0 ? (
-            <div className="flex items-center justify-between">
-              <p className="text-sm text-muted-foreground">No active subscriptions</p>
-              <Button asChild size="sm" variant="outline" style={{ borderColor: '#1b7895', color: '#1b7895' }}>
-                <Link to="/app/subscription">View Plans</Link>
-              </Button>
-            </div>
-          ) : (
-            <div className="flex flex-wrap gap-2">
-              {activeSubs.map((s) => (
-                <Badge key={s.id} variant={statusVariant(s.status)}>
-                  {s.name ?? s.planId}
-                </Badge>
-              ))}
-            </div>
-          )}
-        </CardContent>
-      </Card>
+      {/* Page content */}
+      <div className="space-y-6 max-w-3xl" style={{ position: 'relative', zIndex: 1 }}>
+        {/* Welcome banner */}
+        <div className="rounded-lg px-6 py-5 text-white" style={{ backgroundColor: '#3d3672' }}>
+          <h1 className="text-2xl font-bold tracking-tight">Welcome to BuildBridge</h1>
+          <p className="mt-1 text-sm" style={{ color: 'rgba(255,255,255,0.75)' }}>
+            Location ID:{' '}
+            <code
+              className="font-mono text-xs px-1.5 py-0.5 rounded"
+              style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}
+            >
+              {user?.locationId}
+            </code>
+          </p>
+        </div>
 
-      {/* Quick links */}
-      <div className="grid gap-4 sm:grid-cols-3">
-        {QUICK_LINKS.map(({ to, label, icon: Icon, description }) => (
-          <Link key={to} to={to}>
-            <Card className="h-full transition-shadow hover:shadow-md cursor-pointer" style={{ borderColor: '#1b7895' }}>
-              <CardContent className="flex flex-col gap-3 p-5">
-                <div className="flex items-center justify-between">
-                  <Icon className="h-5 w-5" style={{ color: '#75e6da' }} />
-                  <ArrowRight className="h-4 w-4 text-muted-foreground" />
-                </div>
-                <div>
-                  <p className="font-medium text-sm" style={{ color: '#3d3672' }}>{label}</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">{description}</p>
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-        ))}
+        {/* Subscription status */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base" style={{ color: '#3d3672' }}>Subscription Status</CardTitle>
+            <CardDescription>Your currently active plans</CardDescription>
+          </CardHeader>
+          <CardContent>
+            {activeSubs.length === 0 ? (
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-muted-foreground">No active subscriptions</p>
+                <Button asChild size="sm" variant="outline" style={{ borderColor: '#1b7895', color: '#1b7895' }}>
+                  <Link to="/app/subscription">View Plans</Link>
+                </Button>
+              </div>
+            ) : (
+              <div className="flex flex-wrap gap-2">
+                {activeSubs.map((s) => (
+                  <Badge key={s.id} variant={statusVariant(s.status)}>
+                    {s.name ?? s.planId}
+                  </Badge>
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        {/* Quick links */}
+        <div className="grid gap-4 sm:grid-cols-3">
+          {QUICK_LINKS.map(({ to, label, icon: Icon, description }) => (
+            <Link key={to} to={to}>
+              <Card className="h-full transition-shadow hover:shadow-md cursor-pointer" style={{ borderColor: '#1b7895' }}>
+                <CardContent className="flex flex-col gap-3 p-5">
+                  <div className="flex items-center justify-between">
+                    <Icon className="h-5 w-5" style={{ color: '#75e6da' }} />
+                    <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-sm" style={{ color: '#3d3672' }}>{label}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">{description}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   );

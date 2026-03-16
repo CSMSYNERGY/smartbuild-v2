@@ -54,20 +54,25 @@ export default function Subscription() {
   if (loading) return <p className="text-muted-foreground text-sm">Loading plans…</p>;
 
   return (
-    <div className="space-y-8 max-w-5xl">
-      <div style={{ position: 'relative', overflow: 'hidden' }}>
+    <div style={{ position: 'relative' }}>
+      {/* Full-page background watermark */}
+      <img
+        src="/app/logo.png"
+        alt=""
+        aria-hidden="true"
+        style={{
+          position: 'fixed', top: '50%', left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '70%', height: 'auto', opacity: 0.06,
+          pointerEvents: 'none', userSelect: 'none', zIndex: 0,
+        }}
+      />
+
+      {/* Page content */}
+      <div className="space-y-8 max-w-5xl" style={{ position: 'relative', zIndex: 1 }}>
+      <div>
         <h1 className="text-3xl font-bold tracking-tight" style={{ color: '#3d3672' }}>Subscription</h1>
         <p className="text-muted-foreground mt-1">Choose the plan that fits your workflow.</p>
-        <img
-          src="/app/logo.png"
-          alt=""
-          aria-hidden="true"
-          style={{
-            position: 'absolute', right: '24px', top: '50%', transform: 'translateY(-50%)',
-            height: '100px', width: 'auto', opacity: 0.25,
-            pointerEvents: 'none', userSelect: 'none',
-          }}
-        />
       </div>
 
       {/* Monthly / Annual toggle */}
@@ -142,6 +147,7 @@ export default function Subscription() {
             </Card>
           );
         })}
+      </div>
       </div>
     </div>
   );
