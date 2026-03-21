@@ -5,10 +5,10 @@ import { cn } from '../lib/utils.js';
 import { Button } from '../components/ui/button.jsx';
 
 const NAV_ITEMS = [
-  { to: '/app',              label: 'Home',              end: true },
-  { to: '/app/subscription', label: 'Subscription'                },
-  { to: '/app/mappers',      label: 'Mappers'                     },
-  { to: '/app/smartbuild',   label: 'SmartBuild Config'           },
+  { to: '/buildbridge',              label: 'Home',              end: true },
+  { to: '/buildbridge/subscription', label: 'Subscription'                },
+  { to: '/buildbridge/mappers',      label: 'Mappers'                     },
+  { to: '/buildbridge/smartbuild',   label: 'SmartBuild Config'           },
 ];
 
 export default function AppLayout() {

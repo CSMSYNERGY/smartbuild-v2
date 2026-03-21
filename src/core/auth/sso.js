@@ -24,7 +24,7 @@ export async function ghlSsoController(req, res, next) {
       email: userData.email,
     });
 
-    res.redirect('/app');
+    res.redirect('/buildbridge');
   } catch (err) {
     next(err);
   }

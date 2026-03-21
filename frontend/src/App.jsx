@@ -14,7 +14,7 @@ export default function App() {
       <AuthProvider>
         <ToastProvider>
         <Routes>
-          <Route path="/app" element={<AppLayout />}>
+          <Route path="/buildbridge" element={<AppLayout />}>
             <Route index element={<Home />} />
             <Route path="subscription" element={<Subscription />} />
             <Route path="mappers" element={<Mappers />} />
@@ -22,8 +22,8 @@ export default function App() {
             <Route path="mappers/:id" element={<Mapper />} />
             <Route path="smartbuild" element={<SmartBuild />} />
           </Route>
-          {/* Redirect bare root to /app */}
-          <Route path="/" element={<Navigate to="/app" replace />} />
+          {/* Redirect bare root to /buildbridge */}
+          <Route path="/" element={<Navigate to="/buildbridge" replace />} />
         </Routes>
         </ToastProvider>
       </AuthProvider>

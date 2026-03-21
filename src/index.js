@@ -64,9 +64,9 @@ app.use('/api', webApiRoutes);
 app.use('/webhooks', webhookRoutes);
 app.use('/admin', adminRoutes);
 
-// Serve React frontend at /app
-app.use('/app', express.static(join(__dirname, '..', 'frontend', 'dist')));
-app.get('/app/*splat', (_req, res) => {
+// Serve React frontend at /buildbridge
+app.use('/buildbridge', express.static(join(__dirname, '..', 'frontend', 'dist')));
+app.get('/buildbridge/*splat', (_req, res) => {
   res.sendFile(join(__dirname, '..', 'frontend', 'dist', 'index.html'));
 });
 

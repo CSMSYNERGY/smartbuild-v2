@@ -79,7 +79,7 @@ export async function handleCallback(req, res, next) {
 
     step = 'redirect';
     console.log('[auth/callback] Location saved, redirecting...');
-    res.redirect('/app');
+    res.redirect('/buildbridge');
   } catch (err) {
     console.error(`[auth/callback] ERROR at step "${step}":`, err.message);
     console.error('[auth/callback] Stack:', err.stack);

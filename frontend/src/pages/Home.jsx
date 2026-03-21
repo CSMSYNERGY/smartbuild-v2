@@ -7,9 +7,9 @@ import { Button } from '../components/ui/button.jsx';
 import { CreditCard, Sliders, Hammer, ArrowRight } from 'lucide-react';
 
 const QUICK_LINKS = [
-  { to: '/app/subscription', label: 'Manage Subscription', icon: CreditCard, description: 'View and change your plan' },
-  { to: '/app/mappers',      label: 'Configure Mappers',   icon: Sliders,     description: 'Map integration fields to GHL' },
-  { to: '/app/smartbuild',   label: 'SmartBuild Config',   icon: Hammer,      description: 'Set up your SmartBuild credentials' },
+  { to: '/buildbridge/subscription', label: 'Manage Subscription', icon: CreditCard, description: 'View and change your plan' },
+  { to: '/buildbridge/mappers',      label: 'Configure Mappers',   icon: Sliders,     description: 'Map integration fields to GHL' },
+  { to: '/buildbridge/smartbuild',   label: 'SmartBuild Config',   icon: Hammer,      description: 'Set up your SmartBuild credentials' },
 ];
 
 function statusVariant(status) {
@@ -36,7 +36,7 @@ export default function Home() {
     <div style={{ position: 'relative' }}>
       {/* Full-page background watermark */}
       <img
-        src="/app/logo.png"
+        src="/buildbridge/logo.png"
         alt=""
         aria-hidden="true"
         style={{
@@ -74,7 +74,7 @@ export default function Home() {
               <div className="flex items-center justify-between">
                 <p className="text-sm text-muted-foreground">No active subscriptions</p>
                 <Button asChild size="sm" variant="outline" style={{ borderColor: '#1b7895', color: '#1b7895' }}>
-                  <Link to="/app/subscription">View Plans</Link>
+                  <Link to="/buildbridge/subscription">View Plans</Link>
                 </Button>
               </div>
             ) : (

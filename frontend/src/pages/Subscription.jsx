@@ -57,7 +57,7 @@ export default function Subscription() {
     <div style={{ position: 'relative' }}>
       {/* Full-page background watermark */}
       <img
-        src="/app/logo.png"
+        src="/buildbridge/logo.png"
         alt=""
         aria-hidden="true"
         style={{
