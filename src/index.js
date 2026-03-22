@@ -21,6 +21,9 @@ console.log('[index] All imports resolved. Configuring Express...');
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 
+// Trust Railway's proxy (needed for rate limiting and correct IP detection)
+app.set('trust proxy', 1);
+
 // Security headers
 app.use(helmet({
   contentSecurityPolicy: {
