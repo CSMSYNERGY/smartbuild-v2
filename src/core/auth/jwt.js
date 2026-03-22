@@ -6,7 +6,7 @@ const COOKIE_NAME = 'sb_token';
 const COOKIE_OPTIONS = {
   httpOnly: true,
   secure: env.NODE_ENV === 'production',
-  sameSite: 'lax',
+  sameSite: 'none',
   maxAge: 60 * 60 * 24 * 7 * 1000, // 7 days in ms
   path: '/',
 };
