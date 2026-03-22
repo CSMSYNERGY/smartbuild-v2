@@ -20,7 +20,8 @@ const router = Router();
 
 // ─── Public (no auth) ─────────────────────────────────────────────────────────
 
-// POST /api/sso/decrypt — GHL SSO entry point (issues cookie, redirects to /buildbridge)
+// GET|POST /api/sso/decrypt — GHL SSO entry point (issues cookie, redirects to /buildbridge)
+router.get('/sso/decrypt', authLimiter, ghlSsoController);
 router.post('/sso/decrypt', authLimiter, ghlSsoController);
 
 // ─── Protected ────────────────────────────────────────────────────────────────

@@ -31,6 +31,8 @@ app.use(helmet({
       imgSrc: ["'self'", 'data:', 'https:'],
     },
   },
+  // Allow GHL to embed the app in an iframe
+  frameguard: false,
 }));
 
 // CORS
