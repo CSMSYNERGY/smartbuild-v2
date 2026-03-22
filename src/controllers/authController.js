@@ -78,8 +78,8 @@ export async function handleCallback(req, res, next) {
     setAuthCookie(res, { locationId, companyId });
 
     step = 'redirect';
-    console.log('[auth/callback] Location saved, redirecting...');
-    res.redirect('/buildbridge');
+    console.log('[auth/callback] Location saved, redirecting to GHL sub-account...');
+    res.redirect(`https://app.gohighlevel.com/v2/location/${locationId}/dashboard`);
   } catch (err) {
     console.error(`[auth/callback] ERROR at step "${step}":`, err.message);
     console.error('[auth/callback] Stack:', err.stack);
