@@ -68,7 +68,8 @@ export async function handleCallback(req, res, next) {
         });
         if (userRes.ok) {
           const userData = await userRes.json();
-          userName = userData.name ?? `${userData.firstName ?? ''} ${userData.lastName ?? ''}`.trim() || null;
+          const fullName = `${userData.firstName ?? ''} ${userData.lastName ?? ''}`.trim();
+          userName = userData.name ?? (fullName || null);
           userEmail = userData.email ?? null;
         }
       } catch {

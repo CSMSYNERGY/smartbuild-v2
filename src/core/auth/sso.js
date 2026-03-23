@@ -18,9 +18,8 @@ export async function ghlSsoController(req, res, next) {
 
     const userData = decryptSsoKey(key);
 
-    const name = userData.name
-      ?? `${userData.firstName ?? ''} ${userData.lastName ?? ''}`.trim()
-      || null;
+    const fullName = `${userData.firstName ?? ''} ${userData.lastName ?? ''}`.trim();
+    const name = userData.name ?? (fullName || null);
 
     setAuthCookie(res, {
       locationId: userData.locationId,
