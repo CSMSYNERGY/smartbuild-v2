@@ -6,13 +6,14 @@ import { Input } from '../components/ui/input.jsx';
 import { Label } from '../components/ui/label.jsx';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../components/ui/card.jsx';
 import { Badge } from '../components/ui/badge.jsx';
-import { Eye, EyeOff, RefreshCw, ChevronDown, ChevronUp, CheckCircle2, XCircle } from 'lucide-react';
+import { Eye, EyeOff, RefreshCw, ChevronDown, ChevronUp, CheckCircle2, XCircle, LogOut } from 'lucide-react';
 
 export default function SmartBuild() {
   const { fetchWithAuth } = useAuth();
   const { toast } = useToast();
 
   const [form, setForm] = useState({ username: '', password: '', baseUrl: '' });
+  const [connectedEmail, setConnectedEmail] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -20,13 +21,14 @@ export default function SmartBuild() {
   const [testStatus, setTestStatus] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [credentialsOpen, setCredentialsOpen] = useState(true);
+  const [disconnecting, setDisconnecting] = useState(false);
 
   useEffect(() => {
     fetchWithAuth('/api/smartbuild/config')
       .then((r) => r.json())
       .then((d) => {
         if (d.config) {
-          setForm({ username: d.config.username ?? '', password: d.config.password ?? '', baseUrl: d.config.baseUrl ?? '' });
+          setConnectedEmail(d.config.username ?? '');
           const connected = !!(d.config.username);
           setIsConnected(connected);
           setCredentialsOpen(!connected);
@@ -49,8 +51,12 @@ export default function SmartBuild() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? 'Failed to save');
       toast({ title: 'Configuration saved' });
+      setConnectedEmail(form.username);
       setIsConnected(!!form.username);
-      if (form.username) setCredentialsOpen(false);
+      if (form.username) {
+        setForm({ username: '', password: '', baseUrl: '' });
+        setCredentialsOpen(false);
+      }
     } catch (err) {
       toast({ title: 'Error', description: err.message, variant: 'destructive' });
     } finally {
@@ -82,6 +88,24 @@ export default function SmartBuild() {
       toast({ title: 'Connection failed', description: 'Could not reach the SmartBuild server.', variant: 'destructive' });
     } finally {
       setTesting(false);
+    }
+  }
+
+  async function handleDisconnect() {
+    setDisconnecting(true);
+    try {
+      const res = await fetchWithAuth('/api/smartbuild/config', { method: 'DELETE' });
+      if (!res.ok) throw new Error('Failed to disconnect');
+      toast({ title: 'Account disconnected' });
+      setIsConnected(false);
+      setConnectedEmail('');
+      setForm({ username: '', password: '', baseUrl: '' });
+      setCredentialsOpen(true);
+      setTestStatus(null);
+    } catch (err) {
+      toast({ title: 'Error', description: err.message, variant: 'destructive' });
+    } finally {
+      setDisconnecting(false);
     }
   }
 
@@ -119,18 +143,25 @@ export default function SmartBuild() {
                 {isConnected ? 'Connected' : 'Not connected'}
               </p>
               {isConnected && (
-                <p className="text-sm text-muted-foreground truncate">{form.username}</p>
+                <p className="text-sm text-muted-foreground truncate">{connectedEmail}</p>
               )}
             </div>
-            <Badge
-              style={isConnected
-                ? { backgroundColor: '#75e6da', color: '#1a1a2e', borderColor: 'transparent' }
-                : {}
-              }
-              variant={isConnected ? undefined : 'secondary'}
-            >
-              {isConnected ? 'Active' : 'No credentials'}
-            </Badge>
+            {isConnected ? (
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                disabled={disconnecting}
+                onClick={handleDisconnect}
+                className="shrink-0 gap-1.5"
+                style={{ borderColor: '#e53e3e', color: '#e53e3e' }}
+              >
+                <LogOut className="h-3.5 w-3.5" />
+                {disconnecting ? 'Disconnecting…' : 'Disconnect'}
+              </Button>
+            ) : (
+              <Badge variant="secondary">No credentials</Badge>
+            )}
           </div>
         </CardContent>
       </Card>

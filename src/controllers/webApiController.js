@@ -213,7 +213,8 @@ export async function getSmartBuildConfig(req, res, next) {
 
     if (!row) return res.json({ config: null });
 
-    res.json({ config: JSON.parse(decrypt(row.encryptedPayload)) });
+    const { username, baseUrl } = JSON.parse(decrypt(row.encryptedPayload));
+    res.json({ config: { username, baseUrl } });
   } catch (err) {
     next(err);
   }
@@ -239,11 +240,52 @@ export async function testSmartBuildConnection(req, res, next) {
   }
 }
 
+export async function deleteSmartBuildConfig(req, res, next) {
+  try {
+    const { locationId } = req.user;
+
+    await db
+      .delete(integrationCredentials)
+      .where(
+        and(
+          eq(integrationCredentials.locationId, locationId),
+          eq(integrationCredentials.appSlug, SMARTBUILD_SLUG),
+        ),
+      );
+
+    res.json({ success: true });
+  } catch (err) {
+    next(err);
+  }
+}
+
 export async function saveSmartBuildConfig(req, res, next) {
   try {
     const { locationId } = req.user;
-    const config = req.body;
+    const { username, password, baseUrl } = req.body;
 
+    if (!username || !baseUrl) {
+      throw createError(400, 'username and baseUrl are required');
+    }
+
+    // If no password provided, keep the existing one
+    let resolvedPassword = password;
+    if (!resolvedPassword) {
+      const [existing] = await db
+        .select()
+        .from(integrationCredentials)
+        .where(
+          and(
+            eq(integrationCredentials.locationId, locationId),
+            eq(integrationCredentials.appSlug, SMARTBUILD_SLUG),
+          ),
+        )
+        .limit(1);
+      if (!existing) throw createError(400, 'password is required for new connections');
+      resolvedPassword = JSON.parse(decrypt(existing.encryptedPayload)).password;
+    }
+
+    const config = { username, password: resolvedPassword, baseUrl };
     const encryptedPayload = encrypt(JSON.stringify(config));
 
     const [row] = await db
