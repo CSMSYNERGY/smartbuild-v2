@@ -59,7 +59,7 @@ export default function Mappers() {
           <p className="text-muted-foreground mt-1">Map integration fields to GoHighLevel values.</p>
         </div>
         <Button asChild className="text-white" style={{ backgroundColor: '#3d3672' }}>
-          <Link to="/app/mappers/new">
+          <Link to="/buildbridge/mappers/new">
             <Plus className="h-4 w-4" />
             New Mapper
           </Link>
@@ -71,7 +71,7 @@ export default function Mappers() {
           <CardContent className="flex flex-col items-center justify-center py-12 text-center">
             <p className="text-muted-foreground text-sm">No mappers configured yet.</p>
             <Button asChild className="mt-4" variant="outline" style={{ borderColor: '#1b7895', color: '#1b7895' }}>
-              <Link to="/app/mappers/new">Create your first mapper</Link>
+              <Link to="/buildbridge/mappers/new">Create your first mapper</Link>
             </Button>
           </CardContent>
         </Card>
@@ -106,7 +106,7 @@ export default function Mappers() {
                       <td className="px-6 py-4">
                         <div className="flex items-center justify-end gap-2">
                           <Button asChild variant="ghost" size="icon">
-                            <Link to={`/app/mappers/${m.id}`}>
+                            <Link to={`/buildbridge/mappers/${m.id}`}>
                               <Pencil className="h-4 w-4" />
                             </Link>
                           </Button>

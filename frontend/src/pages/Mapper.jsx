@@ -215,7 +215,7 @@ export default function Mapper() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? 'Failed');
       toast({ title: isNew ? 'Mapper created' : 'Mapper updated' });
-      navigate('/app/mappers');
+      navigate('/buildbridge/mappers');
     } catch (err) {
       toast({ title: 'Error', description: err.message, variant: 'destructive' });
     } finally {
@@ -308,7 +308,7 @@ export default function Mapper() {
                 {saving ? 'Saving…' : isNew ? 'Create Mapper' : 'Save Changes'}
               </Button>
               <Button type="button" variant="outline" asChild>
-                <Link to="/app/mappers">Cancel</Link>
+                <Link to="/buildbridge/mappers">Cancel</Link>
               </Button>
             </div>
           </form>
